@@ -35,6 +35,48 @@
     }
     .skip-link:focus { top: 0; outline: 2px solid var(--focus-outline); }
 
+    /* --- Open Invitation Overlay (Bypasses Autoplay Restrictions) --- */
+    #invitation-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--primary-color);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      text-align: center;
+      padding: 20px;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .open-btn {
+      margin-top: 20px;
+      padding: 14px 28px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      background-color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .open-btn:hover {
+      background-color: #EDF2F7;
+      transform: scale(1.05);
+    }
+
+    .open-btn:active {
+      transform: scale(0.98);
+    }
+
     /* --- Floating Audio Player Widget --- */
     .audio-player-widget {
       position: fixed;
@@ -272,8 +314,15 @@
 
   <a href="#main-content" class="skip-link">Skip to content</a>
 
+  <!-- Entry Overlay to bypass Chrome Autoplay Restriction -->
+  <div id="invitation-overlay">
+    <h1>Bri & Dwi</h1>
+    <p style="margin-top: 10px; color: #E2E8F0;">You are invited to our wedding keepsake</p>
+    <button class="open-btn" onclick="openInvitation()">Open Invitation</button>
+  </div>
+
   <!-- Native HTML Audio Element (Hidden) -->
-  <audio id="bg-audio" loop autoplay preload="auto">
+  <audio id="bg-audio" loop preload="auto">
     <source src="audio/song.mpeg" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
@@ -365,7 +414,6 @@ const audio = document.getElementById('bg-audio');
 const toggleBtn = document.getElementById('audio-toggle-btn');
 const labelText = document.getElementById('audio-label-text');
 
-// Function to update the widget's UI based on playback status
 function updateUI(isPlaying) {
   if (isPlaying) {
     toggleBtn.innerText = '⏸';
@@ -376,48 +424,27 @@ function updateUI(isPlaying) {
   }
 }
 
-// Function that handles playing audio upon first interaction
-function handleFirstInteraction() {
-  if (audio.paused) {
-    audio.play()
-      .then(() => {
-        updateUI(true);
-        removeInteractionListeners();
-      })
-      .catch((err) => {
-        // Browser rejected automatic play from scrolling/passive gesture
-        console.log("Autoplay blocked on scroll:", err);
-      });
-  }
+// Triggered when guest clicks "Open Invitation"
+function openInvitation() {
+  // 1. Play the audio (Guaranteed to work due to direct click)
+  audio.play().then(() => {
+    updateUI(true);
+  }).catch(err => {
+    console.error("Playback failed:", err);
+    updateUI(false);
+  });
+
+  // 2. Smoothly fade out and remove the entry overlay
+  const overlay = document.getElementById('invitation-overlay');
+  overlay.style.opacity = '0';
+  overlay.style.visibility = 'hidden';
 }
 
-function addInteractionListeners() {
-  // Direct tap/click (100% reliable across all browsers)
-  window.addEventListener('click', handleFirstInteraction, { once: true });
-  window.addEventListener('touchstart', handleFirstInteraction, { once: true });
-
-  // Touch drag & wheel movement (fires when user swiped screen to scroll)
-  window.addEventListener('touchmove', handleFirstInteraction, { once: true });
-  window.addEventListener('wheel', handleFirstInteraction, { once: true });
-  window.addEventListener('scroll', handleFirstInteraction, { once: true });
-}
-
-function removeInteractionListeners() {
-  window.removeEventListener('click', handleFirstInteraction);
-  window.removeEventListener('touchstart', handleFirstInteraction);
-  window.removeEventListener('touchmove', handleFirstInteraction);
-  window.removeEventListener('wheel', handleFirstInteraction);
-  window.removeEventListener('scroll', handleFirstInteraction);
-}
-
-addInteractionListeners();
-
-// Explicit manual control via the floating button widget
+// Manual play/pause toggle for the widget button
 function toggleAudio() {
   if (audio.paused) {
     audio.play().then(() => {
       updateUI(true);
-      removeInteractionListeners();
     }).catch(err => {
       console.error("Playback prevented:", err);
       labelText.innerText = 'Audio blocked by browser';
