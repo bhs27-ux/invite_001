@@ -33,15 +33,48 @@
     }
     .skip-link:focus { top: 0; outline: 2px solid var(--focus-outline); }
 
-    /* --- Core Fluid Layout Structure --- */
-    header {
-      background-color: white;
+    /* --- Responsive Hero Header with Background Image --- */
+    .hero-header {
+      /* Point directly to your background file inside your images folder */
+      background-image: url('images/DSC09677.jpg'); 
+      background-position: center center; 
+      background-size: cover; 
+      background-repeat: no-repeat; 
+      min-height: 60vh; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
       text-align: center;
-      padding: 40px 20px;
-      border-bottom: 1px solid #E2E8F0;
     }
-    h1 { color: var(--primary-color); margin-bottom: 10px; font-size: 2.5rem; }
+
+    /* Readability Mask: Ensures text remains WCAG accessible against light photos */
+    .hero-overlay {
+      background-color: rgba(0, 0, 0, 0.45); 
+      padding: 40px 20px;
+      width: 100%;
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-header h1 { 
+      color: #FFFFFF; 
+      margin-bottom: 12px; 
+      font-size: 3rem; 
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    }
     
+    .hero-header p { 
+      color: #EDF2F7; 
+      font-size: 1.25rem; 
+      font-weight: 300;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* --- Main Layout Wrapper --- */
     main {
       max-width: 1200px;
       margin: 0 auto;
@@ -51,13 +84,19 @@
     .intro-section {
       text-align: center;
       max-width: 800px;
-      margin: 40px auto;
+      margin: 60px auto;
     }
 
-    /* --- Automatically Resizing Image Grid --- */
+    .intro-section h2 {
+      color: var(--primary-color);
+      margin-bottom: 16px;
+      font-size: 2rem;
+    }
+
+    /* --- Fluid, Automatically Resizing Image Grid --- */
     .album-grid {
       display: grid;
-      /* Drops to 1 column on phone, expands to fit desktop spaces cleanly */
+      /* Stacks to 1 column on mobile, scales smoothly to fill desktop spaces */
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 24px;
       margin-top: 40px;
@@ -67,7 +106,12 @@
       background: white;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.06);
+      transition: transform 0.2s ease;
+    }
+    
+    .album-item:hover {
+      transform: translateY(-4px);
     }
 
     .album-item img {
@@ -94,10 +138,11 @@
 
     footer {
       text-align: center;
-      padding: 40px 20px;
+      padding: 60px 20px 40px;
       margin-top: 60px;
       font-size: 0.9rem;
       color: #718096;
+      border-top: 1px solid #E2E8F0;
     }
   </style>
 </head>
@@ -106,12 +151,14 @@
   <!-- Keyboard-only shortcut link for screen readers -->
   <a href="#main-content" class="skip-link">Skip to content</a>
 
-  <header>
-    <h1>Bri & Dwi</h1>
-    <p>Our Wedding Album & Keepsake</p>
+  <header class="hero-header">
+    <div class="hero-overlay">
+      <h1>Bri & Dwi</h1>
+      <p>Our Wedding Album & Keepsake</p>
+    </div>
   </header>
 
-  <!-- Main landmark container with explicit ID targeted by our skip link -->
+  <!-- Main content framework targeted by our accessible skip link -->
   <main id="main-content">
     
     <section class="intro-section" aria-label="Welcome Note">
@@ -119,14 +166,14 @@
       <p>The night may have ended, but these moments stay forever. Thank you to everyone who traveled, laughed, danced, and shared our joy with us.</p>
     </section>
 
-    <!-- Accessible list layout for image cards -->
+    <!-- Accessible collection container for image cards -->
     <section aria-label="Photo Album Galleries">
       <div class="album-grid">
         
         <!-- Image Card 1 -->
         <article class="album-item">
-          <!-- Always include descriptive, concise alt attributes for blind guests -->
-          <img src="images/DSC09503.jpg" alt="Sarah and Alex walking down the aisle under hanging white floral arrangements.">
+          <!-- Update the src path and alt descriptions for your specific photo assets -->
+          <img src="images/DSC09503.jpg" alt="Bri and Dwi walking down the aisle under hanging white floral arrangements.">
           <div class="album-caption">The Ceremony</div>
         </article>
 
