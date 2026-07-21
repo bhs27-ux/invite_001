@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Wedding Journey</title>
+  <style>
+    /* --- CSS Reset & Variables --- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary-color: #2D3748;
+      --bg-color: #F7FAFC;
+      --text-color: #1A202C;
+      --focus-outline: #3182CE;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    /* --- Accessibility Skip Link --- */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--primary-color);
+      color: white;
+      padding: 8px;
+      z-index: 100;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 0; outline: 2px solid var(--focus-outline); }
+
+    /* --- Core Fluid Layout Structure --- */
+    header {
+      background-color: white;
+      text-align: center;
+      padding: 40px 20px;
+      border-bottom: 1px solid #E2E8F0;
+    }
+    h1 { color: var(--primary-color); margin-bottom: 10px; font-size: 2.5rem; }
+    
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .intro-section {
+      text-align: center;
+      max-width: 800px;
+      margin: 40px auto;
+    }
+
+    /* --- Automatically Resizing Image Grid --- */
+    .album-grid {
+      display: grid;
+      /* Drops to 1 column on phone, expands to fit desktop spaces cleanly */
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .album-item {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+
+    .album-item img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .album-caption {
+      padding: 16px;
+      font-size: 1rem;
+      font-weight: 500;
+      text-align: center;
+      color: var(--primary-color);
+      border-top: 1px solid #E2E8F0;
+    }
+
+    /* --- Keyboard Navigation Focus Rules --- */
+    *:focus-visible {
+      outline: 3px solid var(--focus-outline);
+      outline-offset: 2px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      margin-top: 60px;
+      font-size: 0.9rem;
+      color: #718096;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Keyboard-only shortcut link for screen readers -->
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header>
+    <h1>Sarah & Alex</h1>
+    <p>Our Wedding Album & Keepsake</p>
+  </header>
+
+  <!-- Main landmark container with explicit ID targeted by our skip link -->
+  <main id="main-content">
+    
+    <section class="intro-section" aria-label="Welcome Note">
+      <h2>Thank You for Celebrating With Us</h2>
+      <p>The night may have ended, but these moments stay forever. Thank you to everyone who traveled, laughed, danced, and shared our joy with us.</p>
+    </section>
+
+    <!-- Accessible list layout for image cards -->
+    <section aria-label="Photo Album Galleries">
+      <div class="album-grid">
+        
+        <!-- Image Card 1 -->
+        <article class="album-item">
+          <!-- Always include descriptive, concise alt attributes for blind guests -->
+          <img src="https://unsplash.com" alt="Sarah and Alex walking down the aisle under hanging white floral arrangements.">
+          <div class="album-caption">The Ceremony</div>
+        </article>
+
+        <!-- Image Card 2 -->
+        <article class="album-item">
+          <img src="https://unsplash.com" alt="Guests dancing laughing inside a brightly lit tent at nighttime.">
+          <div class="album-caption">The Reception</div>
+        </article>
+
+        <!-- Image Card 3 -->
+        <article class="album-item">
+          <img src="https://unsplash.com" alt="A close up view of the tiered wedding cake decorated with gold leaf accents.">
+          <div class="album-caption">Details & Design</div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Made with love. Hosted forever.</p>
+  </footer>
+
+</body>
+</html>
