@@ -5,310 +5,367 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Wedding Journey</title>
 
-  <style>
-    /* --- CSS Reset & Variables --- */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --primary-color: #2D3748;
-      --bg-color: #F7FAFC;
-      --text-color: #1A202C;
-      --focus-outline: #3182CE;
-      --accent-color: #4A5568;
-    }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.6;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-    }
+<style>
+  /* --- CSS Reset & Variables --- */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --primary-color: #2D3748;
+    --bg-color: #F7FAFC;
+    --text-color: #1A202C;
+    --focus-outline: #3182CE;
+    --accent-color: #4A5568;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
 
-    /* --- Accessibility Skip Link --- */
-    .skip-link {
-      position: absolute;
-      top: -40px;
-      left: 0;
-      background: var(--primary-color);
-      color: white;
-      padding: 8px;
-      z-index: 100;
-      transition: top 0.2s;
-    }
-    .skip-link:focus { top: 0; outline: 2px solid var(--focus-outline); }
+  /* --- Accessibility Skip Link --- */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary-color);
+    color: white;
+    padding: 8px;
+    z-index: 100;
+    transition: top 0.2s;
+  }
+  .skip-link:focus { top: 0; outline: 2px solid var(--focus-outline); }
 
-    /* --- Open Invitation Overlay (Bypasses Autoplay Restrictions) --- */
-    #invitation-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: var(--primary-color);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      text-align: center;
-      padding: 20px;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
-    }
+  /* --- Open Invitation Overlay (Bypasses Autoplay Restrictions) --- */
+  #invitation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--primary-color);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    text-align: center;
+    padding: 20px;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
 
-    .open-btn {
-      margin-top: 20px;
-      padding: 14px 28px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--primary-color);
-      background-color: white;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      transition: transform 0.2s, background-color 0.2s;
-    }
+  .open-btn {
+    margin-top: 20px;
+    padding: 14px 28px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    background-color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, background-color 0.2s;
+  }
 
-    .open-btn:hover {
-      background-color: #EDF2F7;
-      transform: scale(1.05);
-    }
+  .open-btn:hover {
+    background-color: #EDF2F7;
+    transform: scale(1.05);
+  }
 
-    .open-btn:active {
-      transform: scale(0.98);
-    }
+  .open-btn:active {
+    transform: scale(0.98);
+  }
 
-    /* --- Floating Audio Player Widget --- */
-    .audio-player-widget {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(8px);
-      border: 1px solid #E2E8F0;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      border-radius: 30px;
-      padding: 8px 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      z-index: 1000;
-      font-size: 0.85rem;
-      font-weight: 500;
-    }
+  /* --- Floating Audio Player Widget --- */
+  .audio-player-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 30px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
 
-    .audio-btn {
-      background: var(--primary-color);
-      color: white;
-      border: none;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      transition: background-color 0.2s, transform 0.1s;
-    }
+  .audio-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    transition: background-color 0.2s, transform 0.1s;
+  }
 
-    .audio-btn:hover { background: #4A5568; }
-    .audio-btn:active { transform: scale(0.95); }
+  .audio-btn:hover { background: #4A5568; }
+  .audio-btn:active { transform: scale(0.95); }
 
-    /* --- Responsive Hero Header with Background Image --- */
-    .hero-header {
-      background-image: url('images/DSC09677.jpg'); 
-      background-position: center center; 
-      background-size: cover; 
-      background-repeat: no-repeat; 
-      min-height: 60vh; 
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      text-align: center;
-    }
+  /* --- Responsive Hero Header with Background Image --- */
+  .hero-header {
+    background-image: url('images/DSC09677.jpg'); 
+    background-position: center center; 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    min-height: 60vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+  }
 
-    .hero-overlay {
-      background-color: rgba(0, 0, 0, 0.45); 
-      padding: 40px 20px;
-      width: 100%;
-      min-height: 60vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+  .hero-overlay {
+    background-color: rgba(0, 0, 0, 0.45); 
+    padding: 40px 20px;
+    width: 100%;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
-    .hero-header h1 { 
-      color: #FFFFFF; 
-      margin-bottom: 12px; 
-      font-size: 3rem; 
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-    }
-    
-    .hero-header p { 
-      color: #EDF2F7; 
-      font-size: 1.25rem; 
-      font-weight: 300;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-    }
-    
-    /* --- Main Layout Wrapper --- */
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
+  .hero-header h1 { 
+    color: #FFFFFF; 
+    margin-bottom: 12px; 
+    font-size: 3rem; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  }
+  
+  .hero-header p { 
+    color: #EDF2F7; 
+    font-size: 1.25rem; 
+    font-weight: 300;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* --- Main Layout Wrapper --- */
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
 
-    .intro-section {
-      text-align: center;
-      max-width: 800px;
-      margin: 60px auto 40px;
-    }
+  .intro-section {
+    text-align: center;
+    max-width: 800px;
+    margin: 60px auto 40px;
+  }
 
-    .intro-section h2 {
-      color: var(--primary-color);
-      margin-bottom: 16px;
-      font-size: 2rem;
-    }
+  .intro-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 16px;
+    font-size: 2rem;
+  }
 
-    /* --- Personalized RSVP Box Layout --- */
-    .rsvp-card {
-      background: white;
-      border-radius: 12px;
-      padding: 40px 30px;
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-      border-top: 5px solid #48BB78;
-      text-align: center;
-      max-width: 650px;
-      margin: 40px auto 60px;
-    }
+  /* --- Personalized RSVP Box Layout --- */
+  .rsvp-card {
+    background: white;
+    border-radius: 12px;
+    padding: 40px 30px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    border-top: 5px solid #48BB78;
+    text-align: center;
+    max-width: 650px;
+    /* UPDATED: Adjusted margin for top header alignment */
+    margin: 20px auto 30px;
+  }
 
-    .rsvp-card h3 {
-      font-size: 1.6rem;
-      color: var(--primary-color);
-      margin-bottom: 12px;
-    }
+  .rsvp-card h3 {
+    font-size: 1.6rem;
+    color: var(--primary-color);
+    margin-bottom: 12px;
+  }
 
-    .rsvp-btn-container {
-      display: flex; 
-      gap: 15px; 
-      justify-content: center; 
-      margin-top: 25px;
-    }
+  .rsvp-btn-container {
+    display: flex; 
+    gap: 15px; 
+    justify-content: center; 
+    /* UPDATED: Adjusted top margin for nested card placement */
+    margin-top: 15px;
+  }
 
-    .rsvp-btn {
-      padding: 14px 28px;
-      font-size: 1rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.2s, transform 0.1s;
-    }
-    
-    .rsvp-btn:active {
-      transform: scale(0.98);
-    }
+  .rsvp-btn {
+    padding: 14px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+  }
+  
+  .rsvp-btn:active {
+    transform: scale(0.98);
+  }
 
-    .btn-yes { background-color: #48BB78; color: white; }
-    .btn-yes:hover { background-color: #38A169; }
-    .btn-no { background-color: #E53E3E; color: white; }
-    .btn-no:hover { background-color: #C53030; }
+  .btn-yes { background-color: #48BB78; color: white; }
+  .btn-yes:hover { background-color: #38A169; }
+  .btn-no { background-color: #E53E3E; color: white; }
+  .btn-no:hover { background-color: #C53030; }
 
-    #rsvp-status {
-      margin-top: 20px; 
-      font-weight: 600; 
-      color: #2B6CB0;
-    }
+  /* NEW: Embedded RSVP block inside each event card */
+  .rsvp-block {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #E2E8F0;
+  }
 
-    /* --- Centered Events Timeline Layout --- */
-    .events-container {
-      display: flex;
-      flex-direction: column; 
-      gap: 30px;
-      margin: 40px auto 80px;
-      max-width: 650px; 
-      width: 100%;
-    }
+  /* NEW: In-card response status (e.g., "Your response: Attending") */
+  .status-text {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 0.95rem;
+    min-height: 1.4em;
+  }
 
-    .event-card {
-      background: white;
-      border-radius: 12px;
-      padding: 30px;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-      border-top: 5px solid var(--accent-color); 
-      text-align: center; 
-    }
+  /* NEW / UPDATED: Global feedback text at the bottom */
+  .global-status {
+    text-align: center;
+    margin: 20px auto 40px;
+    font-weight: 600;
+    font-size: 1rem;
+    min-height: 1.5em; /* Prevents layout shifting during save actions */
+  }
 
-    .event-card h3 {
-      color: var(--primary-color);
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-    }
+  /* --- Centered Events Timeline Layout --- */
+  .events-container {
+    display: flex;
+    flex-direction: column; 
+    gap: 30px;
+    /* UPDATED: Adjusted margins to fit between header and global status */
+    margin: 30px auto;
+    max-width: 650px; 
+    width: 100%;
+  }
 
-    .event-time-location {
-      font-weight: 600;
-      color: var(--accent-color);
-      margin-bottom: 12px;
-      font-size: 1.05rem;
-    }
+  .event-card {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    border-top: 5px solid var(--accent-color); 
+    text-align: center; 
+  }
 
-    .event-details {
-      color: #4A5568;
-    }
+  .event-card h3 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
 
-    /* --- Fluid Image Grid --- */
-    .album-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      margin-top: 40px;
-    }
+  .event-time-location {
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+  }
 
-    .album-item {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07);
-      transition: transform 0.2s ease;
-    }
-    
-    .album-item:hover {
-      transform: translateY(-4px);
-    }
+  .event-details {
+    color: #4A5568;
+  }
+  
+  /* --- Greeting Textarea Styling --- */
+	#guest-greeting-text {
+	  width: 100%;
+	  padding: 12px;
+	  border-radius: 8px;
+	  border: 1px solid #CBD5E0;
+	  font-family: inherit;
+	  font-size: 0.95rem;
+	  resize: vertical; /* Allows resizing vertically, but prevents breaking horizontal layout */
+	  transition: border-color 0.2s, box-shadow 0.2s;
+	}
 
-    .album-item img {
-      width: 100%;
-      height: 350px;
-      object-fit: cover;
-      display: block;
-    }
+	#guest-greeting-text:focus {
+	  border-color: var(--focus-outline);
+	  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
+	}
 
-    .album-caption {
-      padding: 16px;
-      font-size: 1rem;
-      font-weight: 500;
-      text-align: center;
-      color: var(--primary-color);
-      border-top: 1px solid #E2E8F0;
-    }
+	/* --- Public Greetings Wall Layout --- */
+	.greetings-wall-container {
+	  display: flex;
+	  flex-direction: column;
+	  gap: 16px;
+	  max-height: 500px; /* Limits height so long lists don't overwhelm the page */
+	  overflow-y: auto;  /* Adds a smooth scrollbar if there are many wishes */
+	  padding: 8px;
+	}
 
-    /* --- Keyboard Navigation Focus Rules --- */
-    *:focus-visible {
-      outline: 3px solid var(--focus-outline);
-      outline-offset: 2px;
-    }
+	/* Custom subtle scrollbar for the wall */
+	.greetings-wall-container::-webkit-scrollbar {
+	  width: 6px;
+	}
+	.greetings-wall-container::-webkit-scrollbar-thumb {
+	  background-color: #CBD5E0;
+	  border-radius: 3px;
+	}
 
-    footer {
-      text-align: center;
-      padding: 60px 20px 40px;
-      margin-top: 60px;
-      font-size: 0.9rem;
-      color: #718096;
-      border-top: 1px solid #E2E8F0;
-    }
-  </style>
+  /* --- Fluid Image Grid --- */
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .album-item {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07);
+    transition: transform 0.2s ease;
+  }
+  
+  .album-item:hover {
+    transform: translateY(-4px);
+  }
+
+  .album-item img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .album-caption {
+    padding: 16px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    color: var(--primary-color);
+    border-top: 1px solid #E2E8F0;
+  }
+
+  /* --- Keyboard Navigation Focus Rules --- */
+  *:focus-visible {
+    outline: 3px solid var(--focus-outline);
+    outline-offset: 2px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 60px 20px 40px;
+    margin-top: 60px;
+    font-size: 0.9rem;
+    color: #718096;
+    border-top: 1px solid #E2E8F0;
+  }
+</style>
 </head>
 <body>
 
@@ -347,39 +404,75 @@
       <p>The night may have ended, but these moments stay forever. Thank you to everyone who traveled, laughed, danced, and shared our joy with us.</p>
     </section>
 
-    <!-- PERSONALIZED RSVP COMPONENT (Hidden by default, shown via URL Parameter) -->
-    <section id="rsvp-section" class="rsvp-card" style="display: none;" aria-label="Personalized RSVP Portal">
-      <h3 id="rsvp-greeting">Hello!</h3>
-      <p id="rsvp-subtext"></p>
-      
-      <div class="rsvp-btn-container">
-        <button onclick="submitRSVP('Yes')" class="rsvp-btn btn-yes">Accepts with Joy</button>
-        <button onclick="submitRSVP('No')" class="rsvp-btn btn-no">Declines with Regret</button>
-      </div>
-      <p id="rsvp-status" aria-live="polite"></p>
-    </section>
+	<!-- PERSONALIZED RSVP & SCHEDULE SECTION (Hidden by default, shown via URL Parameter) -->
+	<section aria-label="Wedding Events & RSVP Portal">
+	  
+	  <!-- Dynamic Greeting Header -->
+	  <div id="rsvp-header" class="rsvp-card" style="display: none;">
+		<h3 id="rsvp-greeting">Hello!</h3>
+		<p id="rsvp-subtext"></p>
+	  </div>
 
-    <section aria-label="Wedding Events Schedule">
-      <div class="events-container">
-        
-        <article class="event-card">
-          <h3>Holy Matrimony</h3>
-          <div class="event-time-location">11:00 — Gereja Roh Kudus Puri Mas, Rungkut, Surabaya</div>
-          <p class="event-details">
-            Join us as we take our vows and exchange rings in the marriage sacrament. Please arrive 15 minutes early to secure your seating before the processional begins.
-          </p>
-        </article>
+	  <div class="events-container">
+		
+		<!-- 1. HOLY MATRIMONY CARD (MORNING) -->
+		<article id="matrimony-card" class="event-card" style="display: none;">
+		  <h3>Holy Matrimony</h3>
+		  <div class="event-time-location">11:00 — Gereja Roh Kudus Puri Mas, Rungkut, Surabaya</div>
+		  <p class="event-details">
+			Join us as we take our vows and exchange rings in the marriage sacrament. Please arrive 15 minutes early to secure your seating before the processional begins.
+		  </p>
+		  
+		  <!-- Morning RSVP Controls -->
+		  <div class="rsvp-block">
+			<p id="matrimony-status" class="status-text"></p>
+			<div class="rsvp-btn-container">
+			  <button onclick="submitEventRSVP('morning', 'Yes')" class="rsvp-btn btn-yes">Accepts with Joy</button>
+			  <button onclick="submitEventRSVP('morning', 'No')" class="rsvp-btn btn-no">Declines with Regret</button>
+			</div>
+		  </div>
+		</article>
 
-        <article class="event-card">
-          <h3>The Reception</h3>
-          <div class="event-time-location">18:00 — Novotel Samator, Surabaya</div>
-          <p class="event-details">
-            Time to celebrate! Dinner, toasts, and dancing will directly follow a cocktail hour in the glass atrium. Dress code is formal attire.
-          </p>
-        </article>
+		<!-- 2. RECEPTION CARD (EVENING) -->
+		<article id="reception-card" class="event-card" style="display: none;">
+		  <h3>The Reception</h3>
+		  <div class="event-time-location">18:00 — Novotel Samator, Surabaya</div>
+		  <p class="event-details">
+			Time to celebrate! Dinner, toasts, and dancing will directly follow a cocktail hour in the glass atrium. Dress code is formal attire.
+		  </p>
 
-      </div>
-    </section>
+		  <!-- Evening RSVP Controls -->
+		  <div class="rsvp-block">
+			<p id="reception-status" class="status-text"></p>
+			<div class="rsvp-btn-container">
+			  <button onclick="submitEventRSVP('evening', 'Yes')" class="rsvp-btn btn-yes">Accepts with Joy</button>
+			  <button onclick="submitEventRSVP('evening', 'No')" class="rsvp-btn btn-no">Declines with Regret</button>
+			</div>
+		  </div>
+		</article>
+
+	  </div>
+
+	  <!-- Global Feedback Message -->
+	  <p id="rsvp-global-status" aria-live="polite" class="global-status"></p>
+	  
+	  <!-- 3. Personal Greeting Submission Card -->
+		<div id="greeting-input-card" class="rsvp-card" style="display: none;">
+		  <h3>Leave a Wish for the Couple</h3>
+		  <textarea id="guest-greeting-text" rows="4" placeholder="Write your warm wishes here..." style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #CBD5E0;"></textarea>
+		  <button onclick="submitGreeting()" class="rsvp-btn btn-yes" style="margin-top: 10px;">Send Wish</button>
+		  <p id="greeting-status" class="status-text" style="margin-top: 10px;"></p>
+		</div>
+
+	</section>
+	
+	<!-- 4. Public Greetings Wall (Visible to Everyone) -->
+	  <section aria-label="Wishes from Guests" style="max-width: 650px; margin: 40px auto;">
+		<h3 style="text-align: center; color: var(--primary-color); margin-bottom: 20px;">Wishes & Blessings</h3>
+		<div id="greetings-wall" class="greetings-wall-container">
+		  <p style="text-align: center; color: #718096;">Loading wishes...</p>
+		</div>
+	  </section>
 
     <section aria-label="Photo Album Galleries">
       <div class="album-grid">
@@ -461,66 +554,171 @@ audio.onended = () => {
 
 // --- GOOGLE APPS SCRIPT RSVP PORTAL ---
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwhbGbWp8OZTVeWtRw5g2LRmIEGkF9CuK4CAfG2Syv1YeTe1_h7F8qKrfG8r61EhnlB/exec";
-
 const urlParams = new URLSearchParams(window.location.search);
 const guestId = urlParams.get('id');
 
-// 1. Fetch guest details from Google Sheets on page load
-if (guestId) {
-  fetch(`${SCRIPT_URL}?id=${guestId}`)
-    .then(res => res.json())
-    .then(guestData => {
-      if (guestData.status === "success") {
-        document.getElementById('rsvp-section').style.display = 'block';
-        document.getElementById('rsvp-greeting').innerText = `Dear ${guestData.name},`;
-        
-        if (guestData.greeting && guestData.greeting !== "Submitted via Website") {
-          document.getElementById('rsvp-subtext').innerText = guestData.greeting;
-        } else if (guestData.size === 'family') {
-          document.getElementById('rsvp-subtext').innerText = "We can't wait to celebrate with your whole family! Please let us know if your household will be attending.";
-        } else if (guestData.size === 'couple') {
-          document.getElementById('rsvp-subtext').innerText = "We hope the two of you can make it! Let us know if you both will be celebrating with us.";
-        } else {
-          document.getElementById('rsvp-subtext').innerText = "We would love to have you join us on our special day. Please let us know if you can attend.";
-        }
+let currentMorningAttendance = "";
+let currentEveningAttendance = "";
 
-        if (guestData.attendance) {
-          document.getElementById('rsvp-status').innerText = `Your response is currently recorded as: ${guestData.attendance === 'Yes' ? 'Attending' : 'Not Attending'}.`;
-        }
-      }
-    })
-    .catch(err => console.error("Error fetching guest data:", err));
-}
+// --- 1. FETCH GUEST DATA & PUBLIC GREETINGS ON LOAD ---
+document.addEventListener("DOMContentLoaded", () => {
+  // Always fetch public greetings wall
+  loadPublicGreetings();
 
-// 2. Submit the RSVP back to Google Sheets
-function submitRSVP(responseValue) {
+  // If a guest ID is present, fetch individual guest details
+  if (guestId) {
+    fetch(`${SCRIPT_URL}?id=${guestId}`)
+      .then(res => res.json())
+      .then(guestData => {
+        if (guestData.status === "success") {
+          document.getElementById('rsvp-header').style.display = 'block';
+          document.getElementById('rsvp-greeting').innerText = `Dear ${guestData.name},`;
+
+          // Dynamic subtext based on party size
+          const subtextElement = document.getElementById('rsvp-subtext');
+          if (guestData.size === 'family') {
+            subtextElement.innerText = "We can't wait to celebrate with your whole family! Please let us know if your household will be attending.";
+          } else if (guestData.size === 'couple') {
+            subtextElement.innerText = "We hope the two of you can make it! Let us know if you both will be celebrating with us.";
+          } else {
+            subtextElement.innerText = "We would love to have you join us on our special day. Please let us know if you can attend.";
+          }
+
+          // Holy Matrimony
+          if (guestData.morningInvite === 1 || guestData.morningInvite === "1") {
+            document.getElementById('matrimony-card').style.display = 'block';
+            if (guestData.morningAttendance) {
+              currentMorningAttendance = guestData.morningAttendance;
+              document.getElementById('matrimony-status').innerText = 
+                `Your response: ${guestData.morningAttendance === 'Yes' ? 'Attending' : 'Not Attending'}`;
+            }
+          }
+
+          // Reception
+          if (guestData.eveningInvite === 1 || guestData.eveningInvite === "1") {
+            document.getElementById('reception-card').style.display = 'block';
+            if (guestData.eveningAttendance) {
+              currentEveningAttendance = guestData.eveningAttendance;
+              document.getElementById('reception-status').innerText = 
+                `Your response: ${guestData.eveningAttendance === 'Yes' ? 'Attending' : 'Not Attending'}`;
+            }
+          }
+
+          // Greeting Card: Show input & pre-fill if guest previously submitted a wish
+          document.getElementById('greeting-input-card').style.display = 'block';
+          if (guestData.greetings) {
+            document.getElementById('guest-greeting-text').value = guestData.greetings;
+          }
+        }
+      })
+      .catch(err => console.error("Error fetching guest data:", err));
+  }
+});
+
+// --- 2. SUBMIT RSVP ATTENDANCE ---
+function submitEventRSVP(eventType, responseValue) {
   if (!guestId) return;
 
-  document.getElementById('rsvp-status').style.color = '#2B6CB0';
-  document.getElementById('rsvp-status').innerText = "Sending your response...";
+  const globalStatus = document.getElementById('rsvp-global-status');
+  globalStatus.style.color = '#2B6CB0';
+  globalStatus.innerText = "Saving your response...";
+
+  if (eventType === 'morning') currentMorningAttendance = responseValue;
+  if (eventType === 'evening') currentEveningAttendance = responseValue;
 
   fetch(SCRIPT_URL, {
     method: "POST",
     headers: { "Content-Type": "text/plain;charset=utf-8" },
     body: JSON.stringify({
       id: guestId,
-      rsvp: responseValue
+      morningAttendance: currentMorningAttendance,
+      eveningAttendance: currentEveningAttendance
     })
   })
   .then(res => res.json())
   .then(result => {
     if (result.status === "updated") {
-      document.getElementById('rsvp-status').style.color = '#2F855A';
-      document.getElementById('rsvp-status').innerText = `Thank you! Your response (${responseValue === 'Yes' ? 'Attending' : 'Not Attending'}) has been logged.`;
-    } else {
-      throw new Error("Update failed");
+      globalStatus.style.color = '#2F855A';
+      globalStatus.innerText = "Response saved successfully!";
+      
+      const targetElement = eventType === 'morning' ? 'matrimony-status' : 'reception-status';
+      document.getElementById(targetElement).innerText = 
+        `Your response: ${responseValue === 'Yes' ? 'Attending' : 'Not Attending'}`;
     }
   })
   .catch(err => {
-    document.getElementById('rsvp-status').style.color = '#E53E3E';
-    document.getElementById('rsvp-status').innerText = "Something went wrong. Please check your connection and try again.";
-    console.error(err);
+    globalStatus.style.color = '#E53E3E';
+    globalStatus.innerText = "Something went wrong. Please try again.";
   });
+}
+
+// --- 3. SUBMIT GREETING WISH ---
+function submitGreeting() {
+  if (!guestId) return;
+
+  const greetingText = document.getElementById('guest-greeting-text').value.trim();
+  const statusEl = document.getElementById('greeting-status');
+
+  if (!greetingText) {
+    statusEl.style.color = '#E53E3E';
+    statusEl.innerText = "Please write a message before submitting.";
+    return;
+  }
+
+  statusEl.style.color = '#2B6CB0';
+  statusEl.innerText = "Sending your wish...";
+
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify({
+      id: guestId,
+      greetings: greetingText
+    })
+  })
+  .then(res => res.json())
+  .then(result => {
+    if (result.status === "updated") {
+      statusEl.style.color = '#2F855A';
+      statusEl.innerText = "Thank you! Your wish has been posted.";
+      loadPublicGreetings(); // Refresh public wall instantly
+    }
+  })
+  .catch(err => {
+    statusEl.style.color = '#E53E3E';
+    statusEl.innerText = "Failed to send wish. Please try again.";
+  });
+}
+
+// --- 4. FETCH AND DISPLAY PUBLIC GREETINGS WALL ---
+function loadPublicGreetings() {
+  fetch(`${SCRIPT_URL}?action=getGreetings`)
+    .then(res => res.json())
+    .then(data => {
+      const wall = document.getElementById('greetings-wall');
+      if (data.status === "success" && data.greetings.length > 0) {
+        wall.innerHTML = data.greetings.map(item => {
+          const dateStr = item.timestamp ? new Date(item.timestamp).toLocaleDateString() : '';
+          return `
+            <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <strong style="color: var(--primary-color);">${escapeHtml(item.name)}</strong>
+                <small style="color: #A0AEC0; font-size: 0.8rem;">${dateStr}</small>
+              </div>
+              <p style="color: #4A5568; margin: 0; font-size: 0.95rem;">${escapeHtml(item.greeting)}</p>
+            </div>
+          `;
+        }).join('');
+      } else {
+        wall.innerHTML = `<p style="text-align: center; color: #718096;">Be the first to leave a wish!</p>`;
+      }
+    })
+    .catch(err => console.error("Error loading greetings:", err));
+}
+
+// Helper to prevent HTML injection in public greetings
+function escapeHtml(str) {
+  return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 </script>
 </body>
