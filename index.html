@@ -381,7 +381,7 @@
 
   <!-- Entry Overlay to bypass Chrome Autoplay Restriction -->
   <div id="invitation-overlay">
-    <h1>Bri & Dwi</h1>
+    <h1 id="invitation-greeting">Bri & Dwi</h1>
     <p style="margin-top: 10px; color: #E2E8F0;">You are invited to our wedding keepsake</p>
     <button class="open-btn" onclick="openInvitation()">Open Invitation</button>
   </div>
@@ -581,7 +581,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (guestData.status === "success") {
           document.getElementById('rsvp-header').style.display = 'block';
           document.getElementById('rsvp-greeting').innerText = `Dear ${guestData.name},`;
-		  document.getElementById('invitation-overlay').innerText = `Dear ${guestData.name},`;
+		  document.getElementById('invitation-greeting').innerText = `Dear ${guestData.name},`;
 
           // Dynamic subtext based on party size
           const subtextElement = document.getElementById('rsvp-subtext');
