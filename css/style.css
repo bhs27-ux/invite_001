@@ -37,11 +37,11 @@ body {
   
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/landing page.jpg');
   background-color: #95A389;
-  background-size: contain; /* Changed from 'contain' so it covers full screen */
-  background-position: top;
+  background-size: auto 100%; /* Changed from 'contain' so it covers full screen */
+  background-position: top center;
   background-repeat: no-repeat;
   
-  color: white;
+  color: #3D3E28;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -51,18 +51,18 @@ body {
   z-index: 9999;
   
   transition: opacity 0.5s ease, visibility 0.5s ease;
-  font-size: clamp(0.0rem, 1vh, 1.0rem);
+  font-size: clamp(0.1rem, 1vh, 1.25rem);
 }
 
 .invitation-overlay-open-btn {
   margin-top: 27vh;
-  padding: 14px 20px;
-  font-size: clamp(0.0rem, 1vw, 1.0rem);
+  padding: 1.5vh 3vh;
+  font-size: clamp(0.1rem, 1.5vh, 3rem);
   font-weight: 600;
   color: var(--primary-color);
   background-color: white;
   border: none;
-  border-radius: 30px;
+  border-radius: 3vh;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s, background-color 0.2s;
