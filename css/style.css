@@ -38,7 +38,7 @@ body {
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/landing page.jpg');
   background-color: #95A389;
   background-size: contain; /* Changed from 'contain' so it covers full screen */
-  background-position: center;
+  background-position: top;
   background-repeat: no-repeat;
   
   color: white;
@@ -51,7 +51,7 @@ body {
   z-index: 9999;
   
   transition: opacity 0.5s ease, visibility 0.5s ease;
-  font-size: clamp(0.0rem, 1vw, 1.0rem);
+  font-size: clamp(0.0rem, 1vh, 1.0rem);
 }
 
 .invitation-overlay-open-btn {
