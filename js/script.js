@@ -61,25 +61,30 @@ if (audio) {
 // --- GOOGLE APPS SCRIPT RSVP PORTAL ---
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwhbGbWp8OZTVeWtRw5g2LRmIEGkF9CuK4CAfG2Syv1YeTe1_h7F8qKrfG8r61EhnlB/exec";
 
-// Safely extract and decode guest ID for Safari / Messaging App compatibility
-const urlParams = new URLSearchParams(window.location.search);
-const rawId = urlParams.get('id');
-const guestId = rawId ? decodeURIComponent(rawId).trim() : null;
-
+// Global variables for tracking RSVP states
+let guestId = null;
 let currentMorningAttendance = "";
 let currentEveningAttendance = "";
 
-// --- 1. FETCH GUEST DATA & PUBLIC GREETINGS ON LOAD ---
-document.addEventListener("DOMContentLoaded", () => {
+// --- 1. FETCH GUEST DATA & PUBLIC GREETINGS ON LOAD/PAGESHOW ---
+// Uses "pageshow" instead of "DOMContentLoaded" to handle Safari bfcache (back/forward navigation & reloads)
+window.addEventListener("pageshow", () => {
   // Always fetch public greetings wall
   loadPublicGreetings();
 
-  // If a guest ID is present, fetch individual guest details safely
+  // Extract and decode guest ID dynamically on every page view
+  const urlParams = new URLSearchParams(window.location.search);
+  const rawId = urlParams.get('id');
+  guestId = rawId ? decodeURIComponent(rawId).trim() : null;
+
   if (guestId) {
-    // Cache-busting parameter (_=Date.now()) prevents Safari disk caching
+    // Cache-busting parameter (_=Date.now()) + cache: 'no-store' forces Safari to fetch fresh data
     const fetchUrl = `${SCRIPT_URL}?id=${encodeURIComponent(guestId)}&_=${Date.now()}`;
 
-    fetch(fetchUrl, { redirect: 'follow' })
+    fetch(fetchUrl, { 
+      redirect: 'follow',
+      cache: 'no-store'
+    })
       .then(res => {
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         return res.json();
@@ -247,7 +252,10 @@ function submitGreeting() {
 
 // --- 4. FETCH AND DISPLAY PUBLIC GREETINGS WALL ---
 function loadPublicGreetings() {
-  fetch(`${SCRIPT_URL}?action=getGreetings&_=${Date.now()}`, { redirect: 'follow' })
+  fetch(`${SCRIPT_URL}?action=getGreetings&_=${Date.now()}`, { 
+    redirect: 'follow',
+    cache: 'no-store'
+  })
     .then(res => {
       if (!res.ok) throw new Error("Failed to load greetings");
       return res.json();
