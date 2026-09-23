@@ -51,7 +51,7 @@ body {
   z-index: 9999;
   
   transition: opacity 0.5s ease, visibility 0.5s ease;
-  font-size: clamp(0.1rem, 1vh, 1.25rem);
+  font-size: clamp(0.1rem, 1vh, 1.35rem);
 }
 
 .invitation-overlay-open-btn {
@@ -59,8 +59,8 @@ body {
   padding: 1.5vh 3vh;
   font-size: clamp(0.1rem, 1.5vh, 3rem);
   font-weight: 600;
-  color: var(--primary-color);
-  background-color: white;
+  color: #95A389;
+  background-color: #212115;
   border: none;
   border-radius: 3vh;
   cursor: pointer;
@@ -69,7 +69,7 @@ body {
 }
 
 .invitation-overlay-open-btn:hover {
-  background-color: #EDF2F7;
+  background-color: #4E4F33;
   transform: scale(1.05);
 }
 
