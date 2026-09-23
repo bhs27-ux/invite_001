@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (guestData.status === "success") {
           document.getElementById('rsvp-header').style.display = 'block';
           document.getElementById('rsvp-greeting').innerText = `Dear ${guestData.name},`;
-          document.getElementById('invitation-greeting').innerText = `Dear ${guestData.name},`;
+          document.getElementById('invitation-overlay-greeting').innerText = `${guestData.name},`;
 
           // Dynamic subtext based on party size
           const subtextElement = document.getElementById('rsvp-subtext');
