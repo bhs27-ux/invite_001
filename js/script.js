@@ -5,38 +5,45 @@ const labelText = document.getElementById('audio-label-text');
 
 function updateUI(isPlaying) {
   if (isPlaying) {
-    toggleBtn.innerText = '⏸';
-    labelText.innerText = 'Playing Music';
+    if (toggleBtn) toggleBtn.innerText = '⏸';
+    if (labelText) labelText.innerText = 'Playing Music';
   } else {
-    toggleBtn.innerText = '▶';
-    labelText.innerText = 'Play Background Music';
+    if (toggleBtn) toggleBtn.innerText = '▶';
+    if (labelText) labelText.innerText = 'Play Background Music';
   }
 }
 
 // Triggered when guest clicks "Open Invitation"
 function openInvitation() {
-  // 1. Play the audio
-  audio.play().then(() => {
-    updateUI(true);
-  }).catch(err => {
-    console.error("Playback failed:", err);
-    updateUI(false);
-  });
+  if (audio) {
+    // Explicitly call load() to prepare the audio pipeline on iOS Safari
+    audio.load();
+    audio.play().then(() => {
+      updateUI(true);
+    }).catch(err => {
+      console.error("Playback failed:", err);
+      updateUI(false);
+    });
+  }
 
-  // 2. Smoothly fade out and remove the entry overlay
+  // Smoothly fade out and remove the entry overlay
   const overlay = document.getElementById('invitation-overlay');
-  overlay.style.opacity = '0';
-  overlay.style.visibility = 'hidden';
+  if (overlay) {
+    overlay.style.opacity = '0';
+    overlay.style.visibility = 'hidden';
+  }
 }
 
 // Manual play/pause toggle for the widget button
 function toggleAudio() {
+  if (!audio) return;
+  
   if (audio.paused) {
     audio.play().then(() => {
       updateUI(true);
     }).catch(err => {
       console.error("Playback prevented:", err);
-      labelText.innerText = 'Audio blocked by browser';
+      if (labelText) labelText.innerText = 'Audio blocked by browser';
     });
   } else {
     audio.pause();
@@ -50,10 +57,14 @@ if (audio) {
   };
 }
 
+
 // --- GOOGLE APPS SCRIPT RSVP PORTAL ---
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwhbGbWp8OZTVeWtRw5g2LRmIEGkF9CuK4CAfG2Syv1YeTe1_h7F8qKrfG8r61EhnlB/exec";
+
+// Safely extract and decode guest ID for Safari / Messaging App compatibility
 const urlParams = new URLSearchParams(window.location.search);
-const guestId = urlParams.get('id');
+const rawId = urlParams.get('id');
+const guestId = rawId ? decodeURIComponent(rawId).trim() : null;
 
 let currentMorningAttendance = "";
 let currentEveningAttendance = "";
@@ -63,50 +74,73 @@ document.addEventListener("DOMContentLoaded", () => {
   // Always fetch public greetings wall
   loadPublicGreetings();
 
-  // If a guest ID is present, fetch individual guest details
+  // If a guest ID is present, fetch individual guest details safely
   if (guestId) {
-    fetch(`${SCRIPT_URL}?id=${guestId}`)
-      .then(res => res.json())
+    // Cache-busting parameter (_=Date.now()) prevents Safari disk caching
+    const fetchUrl = `${SCRIPT_URL}?id=${encodeURIComponent(guestId)}&_=${Date.now()}`;
+
+    fetch(fetchUrl, { redirect: 'follow' })
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        return res.json();
+      })
       .then(guestData => {
-        if (guestData.status === "success") {
-          document.getElementById('rsvp-header').style.display = 'block';
-          document.getElementById('rsvp-greeting').innerText = `Dear ${guestData.name},`;
-          document.getElementById('invitation-overlay-greeting').innerText = `${guestData.name}`;
+        if (guestData && guestData.status === "success") {
+          const rsvpHeader = document.getElementById('rsvp-header');
+          const rsvpGreeting = document.getElementById('rsvp-greeting');
+          const overlayGreeting = document.getElementById('invitation-overlay-greeting');
+
+          if (rsvpHeader) rsvpHeader.style.display = 'block';
+          if (rsvpGreeting) rsvpGreeting.innerText = `Dear ${guestData.name},`;
+          if (overlayGreeting) overlayGreeting.innerText = `${guestData.name}`;
 
           // Dynamic subtext based on party size
           const subtextElement = document.getElementById('rsvp-subtext');
-          if (guestData.size === 'family') {
-            subtextElement.innerText = "We can't wait to celebrate with your whole family! Please let us know if your household will be attending.";
-          } else if (guestData.size === 'couple') {
-            subtextElement.innerText = "We hope the two of you can make it! Let us know if you both will be celebrating with us.";
-          } else {
-            subtextElement.innerText = "We would love to have you join us on our special day. Please let us know if you can attend.";
+          if (subtextElement) {
+            if (guestData.size === 'family') {
+              subtextElement.innerText = "We can't wait to celebrate with your whole family! Please let us know if your household will be attending.";
+            } else if (guestData.size === 'couple') {
+              subtextElement.innerText = "We hope the two of you can make it! Let us know if you both will be celebrating with us.";
+            } else {
+              subtextElement.innerText = "We would love to have you join us on our special day. Please let us know if you can attend.";
+            }
           }
 
           // Holy Matrimony
           if (guestData.morningInvite === 1 || guestData.morningInvite === "1") {
-            document.getElementById('matrimony-card').style.display = 'block';
+            const matrimonyCard = document.getElementById('matrimony-card');
+            if (matrimonyCard) matrimonyCard.style.display = 'block';
+            
             if (guestData.morningAttendance) {
               currentMorningAttendance = guestData.morningAttendance;
-              document.getElementById('matrimony-status').innerText = 
-                `Your response: ${guestData.morningAttendance === 'Yes' ? 'Attending' : 'Not Attending'}`;
+              const matrimonyStatus = document.getElementById('matrimony-status');
+              if (matrimonyStatus) {
+                matrimonyStatus.innerText = `Your response: ${guestData.morningAttendance === 'Yes' ? 'Attending' : 'Not Attending'}`;
+              }
             }
           }
 
           // Reception
           if (guestData.eveningInvite === 1 || guestData.eveningInvite === "1") {
-            document.getElementById('reception-card').style.display = 'block';
+            const receptionCard = document.getElementById('reception-card');
+            if (receptionCard) receptionCard.style.display = 'block';
+            
             if (guestData.eveningAttendance) {
               currentEveningAttendance = guestData.eveningAttendance;
-              document.getElementById('reception-status').innerText = 
-                `Your response: ${guestData.eveningAttendance === 'Yes' ? 'Attending' : 'Not Attending'}`;
+              const receptionStatus = document.getElementById('reception-status');
+              if (receptionStatus) {
+                receptionStatus.innerText = `Your response: ${guestData.eveningAttendance === 'Yes' ? 'Attending' : 'Not Attending'}`;
+              }
             }
           }
 
           // Greeting Card: Show input & pre-fill if guest previously submitted a wish
-          document.getElementById('greeting-input-card').style.display = 'block';
+          const greetingInputCard = document.getElementById('greeting-input-card');
+          if (greetingInputCard) greetingInputCard.style.display = 'block';
+          
           if (guestData.greetings) {
-            document.getElementById('guest-greeting-text').value = guestData.greetings;
+            const guestGreetingText = document.getElementById('guest-greeting-text');
+            if (guestGreetingText) guestGreetingText.value = guestData.greetings;
           }
         }
       })
@@ -114,13 +148,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+
 // --- 2. SUBMIT RSVP ATTENDANCE ---
 function submitEventRSVP(eventType, responseValue) {
   if (!guestId) return;
 
   const globalStatus = document.getElementById('rsvp-global-status');
-  globalStatus.style.color = '#2B6CB0';
-  globalStatus.innerText = "Saving your response...";
+  if (globalStatus) {
+    globalStatus.style.color = '#2B6CB0';
+    globalStatus.innerText = "Saving your response...";
+  }
 
   if (eventType === 'morning') currentMorningAttendance = responseValue;
   if (eventType === 'evening') currentEveningAttendance = responseValue;
@@ -134,38 +171,51 @@ function submitEventRSVP(eventType, responseValue) {
       eveningAttendance: currentEveningAttendance
     })
   })
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) throw new Error("Server error");
+    return res.json();
+  })
   .then(result => {
-    if (result.status === "updated") {
+    if (result.status === "updated" && globalStatus) {
       globalStatus.style.color = '#2F855A';
       globalStatus.innerText = "Response saved successfully!";
       
       const targetElement = eventType === 'morning' ? 'matrimony-status' : 'reception-status';
-      document.getElementById(targetElement).innerText = 
-        `Your response: ${responseValue === 'Yes' ? 'Attending' : 'Not Attending'}`;
+      const statusEl = document.getElementById(targetElement);
+      if (statusEl) {
+        statusEl.innerText = `Your response: ${responseValue === 'Yes' ? 'Attending' : 'Not Attending'}`;
+      }
     }
   })
   .catch(err => {
-    globalStatus.style.color = '#E53E3E';
-    globalStatus.innerText = "Something went wrong. Please try again.";
+    if (globalStatus) {
+      globalStatus.style.color = '#E53E3E';
+      globalStatus.innerText = "Something went wrong. Please try again.";
+    }
   });
 }
+
 
 // --- 3. SUBMIT GREETING WISH ---
 function submitGreeting() {
   if (!guestId) return;
 
-  const greetingText = document.getElementById('guest-greeting-text').value.trim();
+  const greetingInput = document.getElementById('guest-greeting-text');
+  const greetingText = greetingInput ? greetingInput.value.trim() : "";
   const statusEl = document.getElementById('greeting-status');
 
   if (!greetingText) {
-    statusEl.style.color = '#E53E3E';
-    statusEl.innerText = "Please write a message before submitting.";
+    if (statusEl) {
+      statusEl.style.color = '#E53E3E';
+      statusEl.innerText = "Please write a message before submitting.";
+    }
     return;
   }
 
-  statusEl.style.color = '#2B6CB0';
-  statusEl.innerText = "Sending your wish...";
+  if (statusEl) {
+    statusEl.style.color = '#2B6CB0';
+    statusEl.innerText = "Sending your wish...";
+  }
 
   fetch(SCRIPT_URL, {
     method: "POST",
@@ -175,27 +225,38 @@ function submitGreeting() {
       greetings: greetingText
     })
   })
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) throw new Error("Server error");
+    return res.json();
+  })
   .then(result => {
-    if (result.status === "updated") {
+    if (result.status === "updated" && statusEl) {
       statusEl.style.color = '#2F855A';
       statusEl.innerText = "Thank you! Your wish has been posted.";
       loadPublicGreetings(); // Refresh public wall instantly
     }
   })
   .catch(err => {
-    statusEl.style.color = '#E53E3E';
-    statusEl.innerText = "Failed to send wish. Please try again.";
+    if (statusEl) {
+      statusEl.style.color = '#E53E3E';
+      statusEl.innerText = "Failed to send wish. Please try again.";
+    }
   });
 }
 
+
 // --- 4. FETCH AND DISPLAY PUBLIC GREETINGS WALL ---
 function loadPublicGreetings() {
-  fetch(`${SCRIPT_URL}?action=getGreetings`)
-    .then(res => res.json())
+  fetch(`${SCRIPT_URL}?action=getGreetings&_=${Date.now()}`, { redirect: 'follow' })
+    .then(res => {
+      if (!res.ok) throw new Error("Failed to load greetings");
+      return res.json();
+    })
     .then(data => {
       const wall = document.getElementById('greetings-wall');
-      if (data.status === "success" && data.greetings.length > 0) {
+      if (!wall) return;
+
+      if (data.status === "success" && data.greetings && data.greetings.length > 0) {
         wall.innerHTML = data.greetings.map(item => {
           const dateStr = item.timestamp ? new Date(item.timestamp).toLocaleDateString() : '';
           return `
