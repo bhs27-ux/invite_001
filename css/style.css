@@ -1,7 +1,7 @@
 /* --- CSS Reset & Variables --- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --primary-color: #2D3748;
+  --primary-color: #3D3E28;
   --bg-color: #95A389;
   --text-color: #1A202C;
   --focus-outline: #3182CE;

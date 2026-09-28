@@ -268,12 +268,12 @@ function loadPublicGreetings() {
         wall.innerHTML = data.greetings.map(item => {
           const dateStr = item.timestamp ? new Date(item.timestamp).toLocaleDateString() : '';
           return `
-            <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left;">
+            <div style="background: white; padding: 15px; border-radius: 32px; margin-bottom: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                 <strong style="color: var(--primary-color);">${escapeHtml(item.name)}</strong>
-                <small style="color: #A0AEC0; font-size: 0.8rem;">${dateStr}</small>
+                <small style="color: #9E9879; font-size: 0.8rem;">${dateStr}</small>
               </div>
-              <p style="color: #4A5568; margin: 0; font-size: 0.95rem;">${escapeHtml(item.greeting)}</p>
+              <p style="color: #9E9879; margin: 0; font-size: 0.95rem;">${escapeHtml(item.greeting)}</p>
             </div>
           `;
         }).join('');
