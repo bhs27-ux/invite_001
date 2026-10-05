@@ -234,11 +234,11 @@ main {
 
 /* --- Centered Events Timeline Layout --- */
 .events-container {
-  display: flex;
-  flex-direction: column; 
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   gap: 30px;
   margin: 30px auto;
-  max-width: 650px; 
+  max-width: 1200px;
   width: 100%;
 }
 
