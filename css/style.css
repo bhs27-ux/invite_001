@@ -270,7 +270,8 @@ main {
 
 /* --- Greeting Textarea Styling --- */
 #guest-greeting-text {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0)), url('../images/Wish-headline.png');
+  /*background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0)), url('../images/Wish-headline.png');*/
+  background-color: #95A389;
   width: 100%;
   padding: 12px;
   border-radius: 8px;
