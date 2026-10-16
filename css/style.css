@@ -168,7 +168,7 @@ main {
 .rsvp-card {
   background: white;
   border-radius: 12px;
-  padding: 0px 0px;
+  padding: 20px 20px;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
   border-top: 5px solid #48BB78;
   text-align: center;
