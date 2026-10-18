@@ -147,14 +147,14 @@ body {
 
 /* --- Main Layout Wrapper --- */
 main {
-  max-width: 1200px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 20px;
 }
 
 .intro-section {
   text-align: center;
-  max-width: 800px;
+  max-width: 1080px;
   margin: 60px auto 40px;
 }
 
@@ -239,7 +239,7 @@ main {
   grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   gap: 30px;
   margin: 30px auto;
-  max-width: 1200px;
+  max-width: 1080px;
   width: 100%;
 }
 
