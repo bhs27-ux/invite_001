@@ -295,6 +295,7 @@ main {
   flex-direction: column;
   gap: 16px;
   max-height: 500px;
+  max-width: 1080px; 
   overflow-y: auto;
   padding: 8px;
   background-color: #677557;
