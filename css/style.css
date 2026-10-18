@@ -299,8 +299,8 @@ main {
   overflow-y: auto;
   padding: 8px;
   background-color: #677557;
-  border-radius: 8px;
-  padding: 16px;
+  /*border-radius: 8px;
+  padding: 16px;*/
 }
 
 /* Custom subtle scrollbar for the wall */
