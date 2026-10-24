@@ -288,3 +288,9 @@ function loadPublicGreetings() {
 function escapeHtml(str) {
   return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
+
+// Countdown timer
+const weddingDate = new Date("2027-02-27T11:00:00+07:00");
+const today = new Date();
+const daysLeft = Math.ceil((weddingDate - today) / (1000 * 60 * 60 * 24));
+document.getElementById("countdown").textContent = daysLeft + " DAYS";
