@@ -103,11 +103,11 @@ window.addEventListener("pageshow", () => {
           const subtextElement = document.getElementById('rsvp-subtext');
           if (subtextElement) {
             if (guestData.size === 'family') {
-              subtextElement.innerText = "We can't wait to celebrate with your whole family! Please let us know if your household will be attending.";
+              subtextElement.innerText = "With grateful hearts, we step together into this new chapter of our lives and warmly invite your family to share in our happiness. Come celebrate love, laughter, and the beginning of our forever. Full details for our special day await you below—please let us know if you can attend by";
             } else if (guestData.size === 'couple') {
-              subtextElement.innerText = "We hope the two of you can make it! Let us know if you both will be celebrating with us.";
+              subtextElement.innerText = "With grateful hearts, we step together into this new chapter of our lives and warmly invite both of you to share in our happiness. Come celebrate love, laughter, and the beginning of our forever. Full details for our special day await you below—please let us know if you can attend by";
             } else {
-              subtextElement.innerText = "We would love to have you join us on our special day. Please let us know if you can attend.";
+              subtextElement.innerText = "With grateful hearts, we step together into this new chapter of our lives and warmly invite you to share in our happiness. Come celebrate love, laughter, and the beginning of our forever. Full details for our special day await you below—please let us know if you can attend by";
             }
           }
 
