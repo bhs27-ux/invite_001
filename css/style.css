@@ -165,6 +165,28 @@ main {
 }
 
 /* --- Personalized RSVP Box Layout --- */
+.event-card-wrapper {
+    position: relative;
+}
+
+.matrimony-button-container {
+    position: absolute;
+    top: 87%;          /* adjust up/down */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    margin-top: 0;
+}
+
+.reception-button-container {
+    position: absolute;
+    top: 79%;          /* adjust up/down */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    margin-top: 0;
+}
+
 .rsvp-card {
   background: #E0E6D1;
   border-radius: 12px;
@@ -195,7 +217,7 @@ main {
   font-size: 1rem;
   font-weight: 600;
   border: none;
-  border-radius: 6px;
+  border-radius: 30px;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.1s;
 }
@@ -204,10 +226,10 @@ main {
   transform: scale(0.98);
 }
 
-.btn-yes { background-color: #48BB78; color: white; }
-.btn-yes:hover { background-color: #38A169; }
-.btn-no { background-color: #E53E3E; color: white; }
-.btn-no:hover { background-color: #C53030; }
+.btn-yes { background-color: #738063; color: white; }
+.btn-yes:hover { background-color: #56604A; }
+.btn-no { background-color: #A72D68; color: white; }
+.btn-no:hover { background-color: #7D224E; }
 
 /* Embedded RSVP block inside each event card */
 .rsvp-block {

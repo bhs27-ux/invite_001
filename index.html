@@ -42,8 +42,7 @@
   <main id="main-content">
     
     <section class="intro-section" aria-label="Welcome Note">
-      <h2> </h2>
-      <p> </p>
+      <img src="images/RSVPHeader.png" alt="Header" class="hero-BriDe">
     </section>
 
     <!-- PERSONALIZED RSVP & SCHEDULE SECTION (Hidden by default, shown via URL Parameter) -->
@@ -59,39 +58,35 @@
         
         <!-- 1. HOLY MATRIMONY CARD (MORNING) -->
         <article id="matrimony-card" class="event-card" style="display: none;">
-          <img src="images/Matrimony.png" alt="Gereja Roh Kudus" style="width: 100%; height: auto;">
-		  <h3>Holy Matrimony</h3>
-          <div class="event-time-location">11:00 — Gereja Roh Kudus Puri Mas, Rungkut, Surabaya</div>
-          <p class="event-details">
-            Join us as we take our vows and exchange rings in the marriage sacrament. Please arrive 15 minutes early to secure your seating before the processional begins.
-          </p>
           
+		<div class="event-card-wrapper">
+			<img src="images/Matrimony.png" alt="Gereja Roh Kudus" style="width: 100%; height: auto;">
+			<div class="rsvp-btn-container matrimony-button-container">
+				<button onclick="submitEventRSVP('morning', 'Yes')" class="rsvp-btn btn-yes">Accept</button>
+				<button onclick="submitEventRSVP('morning', 'No')" class="rsvp-btn btn-no">Decline</button>
+			</div>
+		</div>
+		  
           <!-- Morning RSVP Controls -->
           <div class="rsvp-block">
             <p id="matrimony-status" class="status-text"></p>
-            <div class="rsvp-btn-container">
-              <button onclick="submitEventRSVP('morning', 'Yes')" class="rsvp-btn btn-yes">Accepts with Joy</button>
-              <button onclick="submitEventRSVP('morning', 'No')" class="rsvp-btn btn-no">Declines with Regret</button>
-            </div>
           </div>
         </article>
 
         <!-- 2. RECEPTION CARD (EVENING) -->
         <article id="reception-card" class="event-card" style="display: none;">
-		  <img src="images/Reception.png" alt="Hotel Novotel" style="width: 100%; height: auto;">
-          <h3>The Reception</h3>
-          <div class="event-time-location">18:00 — Novotel Samator, Surabaya</div>
-          <p class="event-details">
-            Time to celebrate! Dinner, toasts, and dancing will directly follow a cocktail hour in the glass atrium. Dress code is formal attire.
-          </p>
+		
+		  <div class="event-card-wrapper">
+			<img src="images/Reception.png" alt="Hotel Novotel" style="width: 100%; height: auto;">
+			<div class="rsvp-btn-container reception-button-container">
+				<button onclick="submitEventRSVP('evening', 'Yes')" class="rsvp-btn btn-yes">Accept</button>
+				<button onclick="submitEventRSVP('evening', 'No')" class="rsvp-btn btn-no">Decline</button>
+			</div>
+		  </div>
 
           <!-- Evening RSVP Controls -->
           <div class="rsvp-block">
             <p id="reception-status" class="status-text"></p>
-            <div class="rsvp-btn-container">
-              <button onclick="submitEventRSVP('evening', 'Yes')" class="rsvp-btn btn-yes">Accepts with Joy</button>
-              <button onclick="submitEventRSVP('evening', 'No')" class="rsvp-btn btn-no">Declines with Regret</button>
-            </div>
           </div>
         </article>
 
