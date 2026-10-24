@@ -103,11 +103,11 @@ window.addEventListener("pageshow", () => {
           const subtextElement = document.getElementById('rsvp-subtext');
           if (subtextElement) {
             if (guestData.size === 'family') {
-              subtextElement.innerText = "With grateful hearts, we step together into this new chapter of our lives and warmly invite your family to share in our happiness. Come celebrate love, laughter, and the beginning of our forever. Full details for our special day await you below—please let us know if you can attend by February 13th 2027.";
+              subtextElement.innerText = "With grateful hearts, we step together into this new chapter of our lives and warmly invite your family to share in our happiness. Come celebrate love, laughter, and the beginning of our forever. Full details for our special day await you below—please let us know if you can attend by <b>February 13th 2027.</b>";
             } else if (guestData.size === 'couple') {
-              subtextElement.innerText = "With grateful hearts, we step together into this new chapter of our lives and warmly invite both of you to share in our happiness. Come celebrate love, laughter, and the beginning of our forever. Full details for our special day await you below—please let us know if you can attend by February 13th 2027.";
+              subtextElement.innerText = "With grateful hearts, we step together into this new chapter of our lives and warmly invite both of you to share in our happiness. Come celebrate love, laughter, and the beginning of our forever. Full details for our special day await you below—please let us know if you can attend by <b>February 13th 2027.</b>";
             } else {
-              subtextElement.innerText = "With grateful hearts, we step together into this new chapter of our lives and warmly invite you to share in our happiness. Come celebrate love, laughter, and the beginning of our forever. Full details for our special day await you below—please let us know if you can attend by February 13th 2027.";
+              subtextElement.innerText = "With grateful hearts, we step together into this new chapter of our lives and warmly invite you to share in our happiness.<br> Come celebrate love, laughter, and the beginning of our forever. Full details for our special day await you below.<br> Please let us know if you can attend by <b>February 13th 2027</b>.";
             }
           }
 
