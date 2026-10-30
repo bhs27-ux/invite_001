@@ -107,7 +107,7 @@ window.addEventListener("pageshow", () => {
             } else if (guestData.size === 'couple') {
               subtextElement.innerHTML = "With grateful hearts, we step together into this new chapter of our lives and warmly invite both of you to share in our happiness.<br><br> Come celebrate love, laughter, and the beginning of our forever. Full details for our special day await you below.<br><br> Please let us know if you can attend by <b>February 13th 2027.</b>";
             } else {
-              subtextElement.innerHTML = "With grateful hearts, we step together into this new chapter of our lives and warmly invite you to share in our happiness.<br><br> Come celebrate love, laughter, and the beginning of our forever. Full details for our special day await you below.<br> Please let us know if you can attend by <b>February 13th 2027</b>.";
+              subtextElement.innerHTML = "With grateful hearts, we step together into this new chapter of our lives and warmly invite you to share in our happiness.<br><br> Come celebrate love, laughter, and the beginning of our forever. Full details for our special day await you below.<br><br> Please let us know if you can attend by <b>February 13th 2027</b>.";
             }
           }
 
